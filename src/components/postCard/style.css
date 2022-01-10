@@ -1,0 +1,122 @@
+.post__card {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  width: 100%;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 2px rgba(0, 0, 0, 0.06),
+    0px 0px 1px rgba(0, 0, 0, 0.04);
+  background-color: #fff;
+  padding: 0 1.75rem;
+  border-radius: 17px;
+}
+.post__form {
+  width: 100%;
+  /* display: flex;
+  flex-direction: column;
+  gap: 2rem; */
+}
+.post__header {
+  font-weight: 600;
+  font-size: 0.85rem;
+  width: 100%;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(166, 185, 166, 0.24);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.post__date {
+  font-size: 0.625rem;
+  color: rgba(98, 98, 98, 1);
+}
+.post__inputs {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.post__inputs > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+/* .post__top {
+  font-size: 0.625;
+} */
+.post__details {
+  padding: 1rem 0;
+  min-height: 10rem;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 1rem;
+  /* border-bottom: 1px solid rgba(166, 185, 166, 0.24); */
+}
+.post__textarea.Top {
+  min-height: 2rem;
+}
+.post__textarea {
+  width: 100%;
+  height: 100%;
+  min-height: 6rem;
+  border: 0px;
+  outline: 0;
+  color: grey;
+  font-size: 0.85rem;
+  resize: none;
+  background-color: #fbfbfb;
+  border-radius: 17px;
+  padding: 0.5rem 1.25rem;
+}
+.post__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+  margin-top: 1rem;
+}
+.post__button {
+  margin-left: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+.post__button button {
+  background: transparent;
+  padding: 0.5rem 1.25rem;
+  font-size: 0.625rem;
+  border: 1px solid #424242;
+  color: #424242;
+  cursor: pointer;
+  border-radius: 17px;
+}
+
+.post__image {
+  height: 1.5rem;
+  width: 1.5rem;
+  background-color: green;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  font-size: 0.625rem;
+  color: white;
+}
+.post__img {
+  position: relative;
+  overflow: hidden;
+  font-size: 1.25rem;
+  cursor: pointer !important;
+}
+.post__img svg {
+  cursor: pointer !important;
+}
+.post__img input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* z-index: -1; */
+  opacity: 0;
+  cursor: pointer !important;
+}

@@ -78,6 +78,12 @@
   color: rgba(98, 98, 98, 1);
   cursor: pointer;
 }
+.reports__likes.noClick,
+.reports__messages.noClick {
+  cursor: default;
+  pointer-events: none;
+}
+
 .reports__likes {
   font-size: 0.9rem;
 }
@@ -295,4 +301,7 @@
 .report__control .--disabled {
   pointer-events: none;
   opacity: 0.5;
+}
+.report__controls.--small {
+  font-size: 0.825rem;
 }

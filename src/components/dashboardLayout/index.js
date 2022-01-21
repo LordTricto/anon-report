@@ -79,6 +79,17 @@ const Index = (props) => {
                   Non-Verified Posts
                 </span>
               </Link>
+              <Link to="/interactions">
+                <span
+                  className={` ${
+                    location.pathname.includes("/interactions")
+                      ? "dashboard__link dashboard__linkEffect"
+                      : "dashboard__link"
+                  }`}
+                >
+                  Interactions
+                </span>
+              </Link>
             </div>
           </div>
         )}

@@ -18,7 +18,7 @@ const Timeline = () => {
 
   const getContent = () => {
     apiInstance
-      .get("/posts")
+      .get("/posts/verified")
       .then((resp) => {
         const {
           data: { data },

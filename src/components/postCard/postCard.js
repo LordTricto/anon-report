@@ -16,7 +16,7 @@ import { faImage } from "@fortawesome/free-regular-svg-icons";
 //   "audio/mp3",
 // ];
 
-const PostCard = () => {
+const PostCard = ({ nextFunc }) => {
   const [title, setTitle] = useState([]);
   const [file, setFile] = useState();
   const [description, setDescription] = useState();
@@ -34,19 +34,32 @@ const PostCard = () => {
 
   // setInterval(updateTime, 1000);
 
+  // useEffect(() => {
+  //   if (id === "") return;
+  //   apiInstance
+  //     .post(`/posts/verify/${id}`, {
+  //       input: location,
+  //       input1: happening,
+  //       input2: by,
+  //     })
+  //     .then((resp) => {})
+  //     .catch((err) => {
+  //       console.log(err.response.data.error);
+  //     });
+  // }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
+
   useEffect(() => {
     if (id === "") return;
     apiInstance
-      .post(`/posts/verify/${id}`, {
-        input: location,
-        input1: happening,
-        input2: by,
+      .post(`/feedbacks/${id}`)
+      .then((resp) => {
+        // console.log(resp.data);
+        nextFunc(resp.data.feedback.id);
       })
-      .then((resp) => {})
       .catch((err) => {
-        console.log(err.response.data.error);
+        alert(err.response.data.error);
       });
-  }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [id]);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -54,12 +67,13 @@ const PostCard = () => {
     data.append("post", title);
     data.append("media", file);
     data.append("description", description);
+    data.append("location", location);
+    data.append("happening", happening);
 
     async function uploadData() {
       apiInstance
         .post(`/posts`, data)
         .then((resp) => {
-          alert(resp.data.message);
           setId(resp.data.data.id);
         })
         .catch((err) => {
@@ -68,6 +82,7 @@ const PostCard = () => {
     }
     uploadData();
   };
+
   return (
     <>
       <div className="post__card">

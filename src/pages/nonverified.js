@@ -36,12 +36,12 @@ const Nonverified = () => {
         setPosts(data);
       })
       .catch((err) => {
-        console.log(err.response.data.error);
+        console.log(err?.response?.data?.error);
       });
   };
   const getFeedback = () => {
     apiInstance
-      .get("/posts/feedbacks", {
+      .get("/feedbacks", {
         headers: {
           authorization: `Bearer ${token}`,
         },
@@ -72,6 +72,10 @@ const Nonverified = () => {
                       data={data}
                       ai={feedback.find((el) => el.postId === data.id)}
                       admin={true}
+                      success={(resp) => {
+                        alert(resp);
+                        getContent();
+                      }}
                     />
                   </div>
                 );

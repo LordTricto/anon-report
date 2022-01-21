@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { apiInstance } from "../../utils/utils";
 import { useSelector } from "react-redux";
 
-const ReportCard = ({ data, key, admin, success, ai = null }) => {
+const ReportCard = ({ data, key, admin, success, ai = null, min }) => {
   const token = useSelector((state) => state.token);
   const [info, setInfo] = useState({});
   const [images, setImages] = useState([]);
@@ -23,6 +23,7 @@ const ReportCard = ({ data, key, admin, success, ai = null }) => {
     setInfo(data);
     setImages(data.media);
     setDate(data.createdAt);
+    if (min) return;
     setComments(data.comments);
   }, [data]);
 
@@ -74,7 +75,7 @@ const ReportCard = ({ data, key, admin, success, ai = null }) => {
           success(resp.data.message);
         })
         .catch((err) => {
-          console.log(err.response.data.error);
+          // console.log(err.response.data.error);
         });
     }
     deletePost();
@@ -108,10 +109,10 @@ const ReportCard = ({ data, key, admin, success, ai = null }) => {
         success(resp.data.message);
       })
       .catch((err) => {
-        console.log(err.response.data.error);
+        console.log(err);
       });
   };
-
+  // console.log(data);
   console.log(ai);
   return (
     <>
@@ -136,14 +137,6 @@ const ReportCard = ({ data, key, admin, success, ai = null }) => {
               </Carousel>
             )}
           </div>
-          {/* {images.length > 0 && (
-            <div
-              className="report__more"
-              onClick={() => setShowImage((prev) => !prev)}
-            >
-              show all
-            </div>
-          )} */}
           <p className="report__text">{info.description}</p>
         </div>
         {!admin && (
@@ -151,17 +144,22 @@ const ReportCard = ({ data, key, admin, success, ai = null }) => {
             <div className="reports__actions">
               <div className="reports__likes">
                 {" "}
-                <div className="reports__likes" onClick={likeContent}>
+                <div
+                  className={`reports__likes ${min && "noClick"} `}
+                  onClick={likeContent}
+                >
                   <FontAwesomeIcon icon={faHeart} />
                 </div>
                 <span className="reports__number">{info.likes}</span>
               </div>
               <div
-                className="reports__messages"
+                className={`reports__messages ${min && "noClick"}`}
                 onClick={() => setShowComment(!showComment)}
               >
                 <FontAwesomeIcon icon={faCommentAlt} />
-                <span className="reports__number">{comments.length}</span>
+                <span className="reports__number">
+                  {min ? data.commentCount : comments?.length}
+                </span>
               </div>
             </div>
             {info && info.verified ? (
@@ -173,36 +171,55 @@ const ReportCard = ({ data, key, admin, success, ai = null }) => {
         )}
 
         {admin && (
-          <div className="report__control">
-            {ai !== null && (
-              <div className="report__ai">
-                Note AI has determined that this post is
-                <span className="ai">
-                  {ai?.valid ? " Valid" : " not Valid"}
-                </span>
-              </div>
-            )}
-
-            <div className="report__controls">
-              {info && !info.verified ? (
-                <div
-                  className="report__button --control"
-                  onClick={handleVerify}
-                >
-                  <button type="button">Verify Post</button>
-                </div>
-              ) : (
-                <div className="report__button --control --disabled">
-                  <button type="button">Verified!</button>
+          <>
+            <div className="report__control">
+              {ai !== null && (
+                <div className="report__ai">
+                  Note AI has determined that this post is
+                  <span className="ai">
+                    {ai?.valid ? " Valid" : " not Valid"}
+                  </span>
                 </div>
               )}
+              <h3 className="report__controls">Questions</h3>
+              <div className="report__controls --small">
+                <span>{ai?.questions?.question1}</span>
+                <span>{ai?.answer1}</span>
+              </div>
+              <div className="report__controls --small">
+                <span>{ai?.questions?.question2}</span>
+                <span>{ai?.answer2}</span>
+              </div>
+              <div className="report__controls --small">
+                <span>{ai?.questions?.question3}</span>
+                <span>{ai?.answer3}</span>
+              </div>
+              <div className="report__controls --small">
+                <span>{ai?.questions?.question4}</span>
+                <span>{ai?.answer4}</span>
+              </div>
+              <div className="report__controls">
+                {info && !info.verified ? (
+                  <div
+                    className="report__button --control"
+                    onClick={handleVerify}
+                  >
+                    <button type="button">Verify Post</button>
+                  </div>
+                ) : (
+                  <div className="report__button --control --disabled">
+                    <button type="button">Verified!</button>
+                  </div>
+                )}
 
-              <div className="report__button control" onClick={handleDelete}>
-                <button type="button">Delete Post</button>
+                <div className="report__button control" onClick={handleDelete}>
+                  <button type="button">Delete Post</button>
+                </div>
               </div>
             </div>
-          </div>
+          </>
         )}
+
         <div className={`report__comment ${showComment ? "--show" : "--hide"}`}>
           {!admin && (
             <form onSubmit={onSubmit} className="report__form">
@@ -221,10 +238,10 @@ const ReportCard = ({ data, key, admin, success, ai = null }) => {
             </form>
           )}
         </div>
-        {comments.length > 0 && (
+        {comments?.length > 0 && (
           <div className="report__comments">
             {comments &&
-              comments.map((com, index) => {
+              comments?.map((com, index) => {
                 return (
                   <div className="report__commenter" key={index}>
                     <span>- {com.comment}</span>

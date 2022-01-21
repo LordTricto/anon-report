@@ -1,0 +1,79 @@
+.interactions__container {
+  display: flex;
+  justify-items: flex-start;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: 80vh;
+  padding: 3rem 2rem;
+  gap: 2rem;
+}
+.interactions__div {
+  width: 100%;
+  display: flex;
+  justify-items: flex-start;
+  align-items: center;
+  flex-direction: column;
+  gap: 2rem;
+}
+.interactions__header {
+  display: flex;
+  justify-items: flex-start;
+  align-items: center;
+  flex-direction: row;
+  gap: 2rem;
+  width: 100%;
+}
+
+.interactions__body {
+  height: 30rem;
+}
+
+.interactions__dropdown {
+  padding: 1rem 1rem;
+  background: #00b0ff;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  color: white;
+  width: 10rem;
+  position: relative;
+  text-transform: capitalize;
+  font-weight: 600;
+  cursor: pointer;
+}
+.interactions__items {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  border-radius: 10px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  width: 7rem;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+.interactions__Item {
+  padding: 1rem 1rem;
+  width: 100%;
+  text-align: left;
+  color: #00b0ff;
+  cursor: pointer;
+}
+.interactions__Item:hover {
+  background-color: #00b0ff;
+  color: #ffff;
+}
+.active {
+  opacity: 1;
+  pointer-events: unset;
+}
+.interactions__arrow.active {
+  transform: rotate(180deg);
+}

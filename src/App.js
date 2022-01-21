@@ -3,6 +3,7 @@ import "./App.css";
 import { Route, Routes } from "react-router-dom";
 
 import AdminTimeline from "./pages/adminTimeline";
+import Interactions from "./pages/Interactions";
 import Login from "./pages/login";
 import Nonverified from "./pages/nonverified";
 import Report from "./pages/report";
@@ -17,6 +18,7 @@ const App = () => {
         <Route exact path="/report" element={<Report />} />
         <Route exact path="/nonverified" element={<Nonverified />} />
         <Route exact path="/adminTimeline" element={<AdminTimeline />} />
+        <Route exact path="/interactions" element={<Interactions />} />
       </Routes>
     </div>
   );

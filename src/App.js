@@ -17,7 +17,7 @@ const App = () => {
         <Route exact path="/" element={<Timeline />} />
         <Route exact path="/report" element={<Report />} />
         <Route exact path="/nonverified" element={<Nonverified />} />
-        <Route exact path="/adminTimeline" element={<AdminTimeline />} />
+        <Route exact path="/admintimeline" element={<AdminTimeline />} />
         <Route exact path="/interactions" element={<Interactions />} />
       </Routes>
     </div>

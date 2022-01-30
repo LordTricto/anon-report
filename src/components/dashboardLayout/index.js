@@ -24,7 +24,7 @@ const Index = (props) => {
           </Link>
           {admin ? (
             <>
-              <Link to="/adminTimeline">
+              <Link to="/admintimeline">
                 <span className="dashboard__link">Dashboard</span>
               </Link>
               <Link to="/">

@@ -12,9 +12,12 @@ const AdminTimeline = () => {
   const [posts, setPosts] = useState([]);
   const navigation = useNavigate();
   const admin = useSelector((state) => state.admin);
+  const token = useSelector((state) => state.token);
 
+  const [feedback, setFeedback] = useState([]);
   useEffect(() => {
     getContent();
+    getFeedback();
   }, []);
 
   useEffect(() => {
@@ -36,7 +39,24 @@ const AdminTimeline = () => {
         console.log(err.response.data.error);
       });
   };
+  const getFeedback = () => {
+    apiInstance
+      .get("/feedbacks", {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      })
+      .then((resp) => {
+        const {
+          data: { data },
+        } = resp;
 
+        setFeedback(data);
+      })
+      .catch((err) => {
+        console.log(err.response.data.error);
+      });
+  };
   return (
     <>
       <DashboardLayout admin>
@@ -50,6 +70,7 @@ const AdminTimeline = () => {
                   <div key={index}>
                     <ReportCard
                       data={data}
+                      ai={feedback.find((el) => el.postId === data.id)}
                       admin={true}
                       success={(resp) => {
                         alert(resp);

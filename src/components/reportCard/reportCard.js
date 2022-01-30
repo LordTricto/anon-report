@@ -158,11 +158,11 @@ const ReportCard = ({ data, key, admin, success, ai = null, min }) => {
               >
                 <FontAwesomeIcon icon={faCommentAlt} />
                 <span className="reports__number">
-                  {min ? data.commentCount : comments?.length}
+                  {min ? data?.commentCount : comments?.length}
                 </span>
               </div>
             </div>
-            {info && info.verified ? (
+            {info && info?.verified ? (
               <div className="reports__verified">verified</div>
             ) : (
               <div className="reports__nonverified">non-verified</div>
@@ -199,7 +199,7 @@ const ReportCard = ({ data, key, admin, success, ai = null, min }) => {
                 <span>{ai?.answer4}</span>
               </div>
               <div className="report__controls">
-                {info && !info.verified ? (
+                {info && !info?.verified ? (
                   <div
                     className="report__button --control"
                     onClick={handleVerify}

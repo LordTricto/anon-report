@@ -38,7 +38,7 @@ const Login = () => {
   useEffect(() => {
     if (login) {
       dispatch(setAdmin(token));
-      navigation("/adminTimeline");
+      navigation("/admintimeline");
     }
   }, [login]); // eslint-disable-line react-hooks/exhaustive-deps
   return (

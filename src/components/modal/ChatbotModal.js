@@ -27,7 +27,7 @@ const ChatbotModal = ({ closeFunc, feedbackId }) => {
         setAnswer(() => "");
       })
       .catch((err) => {
-        console.log(err.response.data.error);
+        console.log(err.response?.data?.error);
       });
   };
 

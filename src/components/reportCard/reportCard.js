@@ -17,6 +17,8 @@ const ReportCard = ({ data, key, admin, success, ai = null, min }) => {
   const [comment, setComment] = useState();
   const [comments, setComments] = useState([]);
   const [showComment, setShowComment] = useState(false);
+  const [showAll, setShowAll] = useState(false);
+  const [hideQuestion, setHideQuestion] = useState(true);
 
   useEffect(() => {
     if (!data || data.length < 1) return;
@@ -113,7 +115,7 @@ const ReportCard = ({ data, key, admin, success, ai = null, min }) => {
       });
   };
   // console.log(data);
-  console.log(ai);
+  console.log(showAll);
   return (
     <>
       <div className="report__post" key={key}>
@@ -137,7 +139,17 @@ const ReportCard = ({ data, key, admin, success, ai = null, min }) => {
               </Carousel>
             )}
           </div>
-          <p className="report__text">{info.description}</p>
+          <div className={`report__text ${showAll && "--showAll"}`}>
+            {info.description}
+          </div>
+          {info?.description?.length > 200 && (
+            <div
+              className="report__showAll"
+              onClick={() => setShowAll((prev) => !prev)}
+            >
+              {showAll ? "hide all" : "show all"}
+            </div>
+          )}
         </div>
         {!admin && (
           <div className="report__bottom">
@@ -181,23 +193,38 @@ const ReportCard = ({ data, key, admin, success, ai = null, min }) => {
                   </span>
                 </div>
               )}
-              <h3 className="report__controls">Questions</h3>
-              <div className="report__controls --small">
-                <span>{ai?.questions?.question1}</span>
-                <span>{ai?.answer1}</span>
+              <div className="report__controls --question">
+                <span>Questions</span>
+                <span
+                  className="--span"
+                  onClick={() => setHideQuestion((prev) => !prev)}
+                >
+                  {hideQuestion ? "show" : "hide"}
+                </span>
               </div>
-              <div className="report__controls --small">
-                <span>{ai?.questions?.question2}</span>
-                <span>{ai?.answer2}</span>
+              <div
+                className={`report__controls --questionContainer ${
+                  hideQuestion && "--hideQuestion"
+                }`}
+              >
+                <div className="report__controls --small">
+                  <span>{ai?.questions?.question1}</span>
+                  <span>{ai?.answer1}</span>
+                </div>
+                <div className="report__controls --small">
+                  <span>{ai?.questions?.question2}</span>
+                  <span>{ai?.answer2}</span>
+                </div>
+                <div className="report__controls --small">
+                  <span>{ai?.questions?.question3}</span>
+                  <span>{ai?.answer3}</span>
+                </div>
+                <div className="report__controls --small">
+                  <span>{ai?.questions?.question4}</span>
+                  <span>{ai?.answer4}</span>
+                </div>
               </div>
-              <div className="report__controls --small">
-                <span>{ai?.questions?.question3}</span>
-                <span>{ai?.answer3}</span>
-              </div>
-              <div className="report__controls --small">
-                <span>{ai?.questions?.question4}</span>
-                <span>{ai?.answer4}</span>
-              </div>
+
               <div className="report__controls">
                 {info && !info?.verified ? (
                   <div
@@ -220,24 +247,29 @@ const ReportCard = ({ data, key, admin, success, ai = null, min }) => {
           </>
         )}
 
-        <div className={`report__comment ${showComment ? "--show" : "--hide"}`}>
-          {!admin && (
-            <form onSubmit={onSubmit} className="report__form">
-              <span>Comment</span>
-              <textarea
-                className="report__textarea Bottom"
-                name="reportDescription"
-                onChange={(event) => {
-                  const { value } = event.target;
-                  setComment(value);
-                }}
-              ></textarea>
-              <div className="report__button">
-                <button type="submit">Post</button>
-              </div>
-            </form>
-          )}
-        </div>
+        {!admin && (
+          <div
+            className={`report__comment ${showComment ? "--show" : "--hide"}`}
+          >
+            {!admin && (
+              <form onSubmit={onSubmit} className="report__form">
+                <span>Comment</span>
+                <textarea
+                  className="report__textarea Bottom"
+                  name="reportDescription"
+                  onChange={(event) => {
+                    const { value } = event.target;
+                    setComment(value);
+                  }}
+                ></textarea>
+                <div className="report__button">
+                  <button type="submit">Post</button>
+                </div>
+              </form>
+            )}
+          </div>
+        )}
+
         {comments?.length > 0 && (
           <div className="report__comments">
             {comments &&

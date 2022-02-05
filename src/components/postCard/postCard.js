@@ -19,6 +19,9 @@ import { faImage } from "@fortawesome/free-regular-svg-icons";
 const PostCard = ({ nextFunc }) => {
   const [title, setTitle] = useState([]);
   const [file, setFile] = useState();
+  const [video, setVideo] = useState([]);
+  const [audio, setAudio] = useState([]);
+  const [selectedFiles, setSelectedFiles] = useState([]);
   const [description, setDescription] = useState();
   const [location, setLocation] = useState();
   const [happening, setHappening] = useState();
@@ -83,6 +86,52 @@ const PostCard = ({ nextFunc }) => {
     uploadData();
   };
 
+  const handleImageChange = (e) => {
+    console.log(e.target.files);
+    if (e.target.files) {
+      setFile(e.target.files);
+      const filesArray = Array.from(e.target.files)
+        .filter((file) => file.type.includes("image"))
+        .map((file) => URL.createObjectURL(file));
+      const videoArray = Array.from(e.target.files)
+        .filter((file) => file.type.includes("video"))
+        .map((el) => URL.createObjectURL(el));
+      // console.log("filesArray: ", filesArray);
+      setVideo((prev) => prev.concat(videoArray));
+      const audioArray = Array.from(e.target.files)
+        .filter((file) => file.type.includes("audio"))
+        .map((el) => URL.createObjectURL(el));
+      // console.log("filesArray: ", filesArray);
+      setAudio((prev) => prev.concat(audioArray));
+      setSelectedFiles((prevImages) => prevImages.concat(filesArray));
+      Array.from(e.target.files).map(
+        (file) => URL.revokeObjectURL(file) // avoid memory leak
+      );
+    }
+  };
+
+  const renderPhotos = (source) => {
+    console.log("source: ", source);
+    return source.map((photo) => {
+      return <img src={photo} alt="" key={photo} />;
+    });
+  };
+  const renderVideos = (source) => {
+    return source.map((video) => {
+      return (
+        <video width="400" controls>
+          <source src={video} type="video/mp4" />
+          Your browser does not support HTML video.
+        </video>
+      );
+    });
+  };
+  const renderAudio = (source) => {
+    return source.map((audio) => {
+      return <audio src={audio}></audio>;
+    });
+  };
+
   return (
     <>
       <div className="post__card">
@@ -112,6 +161,7 @@ const PostCard = ({ nextFunc }) => {
                 <textarea
                   className="post__textarea Bottom"
                   name="reportDescription"
+                  maxLength="10000"
                   onChange={(event) => {
                     const { value } = event.target;
                     setDescription(value);
@@ -119,7 +169,7 @@ const PostCard = ({ nextFunc }) => {
                 ></textarea>
               </div>
               <div>
-                <span>Loction</span>
+                <span>Location</span>
                 <textarea
                   className="post__textarea Top"
                   name="reportDescription"
@@ -159,18 +209,26 @@ const PostCard = ({ nextFunc }) => {
             </div>
 
             <div className="post__img">
-              <FontAwesomeIcon icon={faImage} />
+              <FontAwesomeIcon className="icon" icon={faImage} />
               <input
                 type="file"
+                multiple
                 id="file"
-                onChange={(event) => {
-                  const file = event.target.files[0];
-                  setFile(file);
-                }}
+                className="input"
+                onChange={handleImageChange}
+                // onChange={(event) => {
+                //   const file = event.target.files[0];
+                //   setFile(file);
+                // }}
               />
             </div>
           </div>
         </form>
+        <div className="post__preview">
+          {selectedFiles.length > 0 && renderPhotos(selectedFiles)}
+          {video.length > 0 && renderVideos(video)}
+          {audio.length > 0 && renderAudio(audio)}
+        </div>
       </div>
     </>
   );

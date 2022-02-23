@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import DashboardLayout from "../components/dashboardLayout";
 import ReportCard from "../components/reportCard/reportCard";
 import { apiInstance } from "../utils/utils";
+import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -15,17 +16,13 @@ const AdminTimeline = () => {
   const token = useSelector((state) => state.token);
 
   const [feedback, setFeedback] = useState([]);
-  useEffect(() => {
-    getContent();
-    getFeedback();
-  }, []);
 
   useEffect(() => {
     if (admin) return;
     navigation("/");
   }, [admin]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const getContent = () => {
+  const getContent = useCallback(() => {
     apiInstance
       .get("/posts")
       .then((resp) => {
@@ -38,8 +35,8 @@ const AdminTimeline = () => {
       .catch((err) => {
         console.log(err.response.data.error);
       });
-  };
-  const getFeedback = () => {
+  }, []);
+  const getFeedback = useCallback(() => {
     apiInstance
       .get("/feedbacks", {
         headers: {
@@ -56,7 +53,12 @@ const AdminTimeline = () => {
       .catch((err) => {
         console.log(err.response.data.error);
       });
-  };
+  }, [token]);
+
+  useEffect(() => {
+    getContent();
+    getFeedback();
+  }, [getContent, getFeedback]);
   return (
     <>
       <DashboardLayout admin>

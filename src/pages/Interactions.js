@@ -7,11 +7,8 @@ import ChartCanva from "../components/chart/Chart";
 import DashboardLayout from "../components/dashboardLayout";
 import ReportCard from "../components/reportCard/reportCard";
 import { apiInstance } from "../utils/utils";
-import { useSelector } from "react-redux";
 
 const Interactions = () => {
-  const token = useSelector((state) => state.token);
-
   const [data, setData] = useState("");
   const [mostReportedData, setMostReportedData] = useState("");
   const [dataArray, setDataArray] = useState("");
@@ -158,41 +155,56 @@ const Interactions = () => {
             </div>
           </div>
           <div className="interactions__body">
-            <ChartCanva dataArray={dataArray} keyArray={threatArray} />
+            {dataArray.length < 1 ? (
+              <div className="interactions__body --noCase">
+                There are no cases
+              </div>
+            ) : (
+              <div className="interactions__body --chart">
+                <ChartCanva dataArray={dataArray} keyArray={threatArray} />
+              </div>
+            )}
           </div>
         </div>
         <div className="interactions__div">
           <div className="interactions__header">Highest Comment</div>
-          <div className="interactions__body">
+          <div className="interactions__body --card">
             <ReportCard data={highestComment} min />
           </div>
         </div>
         <div className="interactions__div">
           <div className="interactions__header">Lowest Comment</div>
-          <div className="interactions__body">
-            <ReportCard data={lowestComment} />
+          <div className="interactions__body --card">
+            <ReportCard data={lowestComment} min />
           </div>
         </div>
         <div className="interactions__div">
           <div className="interactions__header">Most Reported Cases</div>
           <div className="interactions__body">
-            {" "}
-            <ChartCanva
-              dataArray={mostReportedDataArray}
-              keyArray={mostReportedThreatArray}
-            />
+            {mostReportedDataArray.length < 1 ? (
+              <div className="interactions__body --noCase">
+                There are no cases
+              </div>
+            ) : (
+              <div className="interactions__body --chart">
+                <ChartCanva
+                  dataArray={mostReportedDataArray}
+                  keyArray={mostReportedThreatArray}
+                />
+              </div>
+            )}
           </div>
         </div>
         <div className="interactions__div">
           <div className="interactions__header">Highest Likes</div>
-          <div className="interactions__body">
-            <ReportCard data={highestLikes} />
+          <div className="interactions__body --card">
+            <ReportCard data={highestLikes} min />
           </div>
         </div>
         <div className="interactions__div">
           <div className="interactions__header">Lowest Likes</div>
-          <div className="interactions__body">
-            <ReportCard data={lowestLikes} />
+          <div className="interactions__body --card">
+            <ReportCard data={lowestLikes} min />
           </div>
         </div>
       </div>

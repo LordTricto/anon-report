@@ -3,7 +3,6 @@ import {} from "chart.js";
 import {
   ArcElement,
   CategoryScale,
-  Chart,
   Chart as ChartJS,
   Filler,
   Legend,
@@ -13,7 +12,6 @@ import {
   TimeScale,
   Tooltip,
 } from "chart.js";
-import React, { useEffect, useRef, useState } from "react";
 
 import { Doughnut } from "react-chartjs-2";
 

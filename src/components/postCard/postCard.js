@@ -62,7 +62,7 @@ const PostCard = ({ nextFunc }) => {
       .catch((err) => {
         alert(err.response.data.error);
       });
-  }, [id]);
+  }, [id, nextFunc]);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -72,6 +72,7 @@ const PostCard = ({ nextFunc }) => {
     data.append("description", description);
     data.append("location", location);
     data.append("happening", happening);
+    data.append("by", by);
 
     async function uploadData() {
       apiInstance

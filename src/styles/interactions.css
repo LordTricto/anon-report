@@ -27,8 +27,21 @@
 
 .interactions__body {
   height: 30rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
+.interactions__body.--card {
+  max-width: 20rem;
+  width: 100%;
+}
+.interactions__body.--noCase {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .interactions__dropdown {
   padding: 1rem 1rem;
   background: #00b0ff;

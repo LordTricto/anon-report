@@ -27,7 +27,7 @@ const ReportCard = ({ data, key, admin, success, ai = null, min }) => {
     setDate(data.createdAt);
     if (min) return;
     setComments(data.comments);
-  }, [data]);
+  }, [data, min]);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -114,8 +114,6 @@ const ReportCard = ({ data, key, admin, success, ai = null, min }) => {
         console.log(err);
       });
   };
-  // console.log(data);
-  console.log(showAll);
   return (
     <>
       <div className="report__post" key={key}>

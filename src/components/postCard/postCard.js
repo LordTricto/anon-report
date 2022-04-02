@@ -210,6 +210,7 @@ const PostCard = ({ nextFunc }) => {
             </div>
 
             <div className="post__img">
+              <span>Click to add image</span>
               <FontAwesomeIcon className="icon" icon={faImage} />
               <input
                 type="file"
@@ -217,10 +218,6 @@ const PostCard = ({ nextFunc }) => {
                 id="file"
                 className="input"
                 onChange={handleImageChange}
-                // onChange={(event) => {
-                //   const file = event.target.files[0];
-                //   setFile(file);
-                // }}
               />
             </div>
           </div>

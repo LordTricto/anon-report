@@ -4,18 +4,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  /* background: rgb(0, 172, 40);
-  background: linear-gradient(
-    135deg,
-    rgba(0, 172, 40, 1) 27%,
-    rgba(0, 207, 208, 1) 65%
-  ); */
   background-color: whitesmoke;
 }
 .login__card {
-  /* background-color: whitesmoke; */
   background: #ffff;
   border-radius: 27px;
+  margin: 0 1rem;
   padding: 3rem 2rem;
   max-width: 20rem;
   width: 100%;
@@ -24,13 +18,6 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 2rem;
-  /* background: rgb(0, 172, 40);
-  background: linear-gradient(
-    135deg,
-    rgba(0, 172, 40, 1) 27%,
-    rgba(0, 207, 208, 1) 65%
-  ); */
   box-shadow: 0px 1px 13px 8px rgba(0, 0, 0, 0.06);
   -webkit-box-shadow: 0px 1px 13px 8px rgba(0, 0, 0, 0.06);
   -moz-box-shadow: 0px 1px 13px 8px rgba(0, 0, 0, 0.06);
@@ -42,19 +29,21 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  margin-top: 2rem;
 }
 .login__form {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+}
+.login__form div:not(:first-child) {
+  margin-top: 2rem;
 }
 .login__inputs {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
 }
+
 .login__error {
   font-size: 0.825rem;
   color: red;
@@ -65,14 +54,4 @@
   color: white;
   background-color: black;
   cursor: pointer;
-}
-.login__signup {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  gap: 0.5rem;
-}
-.login__signup a {
-  color: rgb(168, 61, 168);
 }

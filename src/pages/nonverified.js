@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 
 import DashboardLayout from "../components/dashboardLayout";
 import ReportCard from "../components/reportCard/reportCard";
+import { TailSpin } from "react-loader-spinner";
 import { apiInstance } from "../utils/utils";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -15,6 +16,7 @@ const Nonverified = () => {
 
   const [posts, setPosts] = useState([]);
   const [feedback, setFeedback] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getContent();
@@ -27,19 +29,23 @@ const Nonverified = () => {
   }, [admin]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const getContent = () => {
+    setLoading(true);
     apiInstance
       .get("/posts/nonverified")
       .then((resp) => {
+        setLoading(false);
         const {
           data: { data },
         } = resp;
         setPosts(data);
       })
       .catch((err) => {
+        setLoading(false);
         console.log(err?.response?.data?.error);
       });
   };
   const getFeedback = () => {
+    setLoading(true);
     apiInstance
       .get("/feedbacks", {
         headers: {
@@ -47,13 +53,14 @@ const Nonverified = () => {
         },
       })
       .then((resp) => {
+        setLoading(false);
         const {
           data: { data },
         } = resp;
-
         setFeedback(data);
       })
       .catch((err) => {
+        setLoading(false);
         console.log(err.response.data.error);
       });
   };
@@ -62,7 +69,13 @@ const Nonverified = () => {
       <DashboardLayout admin>
         <div className="timeline__body">
           <div className="timeline__reports">
-            {posts && posts.length === 0 ? (
+            {loading ? (
+              <>
+                <div className="loading">
+                  <TailSpin color="#00b0ff" height={20} width={20} />
+                </div>
+              </>
+            ) : posts && posts.length === 0 ? (
               <div className="timeline__none">There are no posts</div>
             ) : (
               posts?.map((data, index) => {

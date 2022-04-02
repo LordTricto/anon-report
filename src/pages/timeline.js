@@ -1,25 +1,28 @@
 import "../styles/timeline.css";
 
-import React, { useEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 
 import DashboardLayout from "../components/dashboardLayout";
 import { Link } from "react-router-dom";
 import ReportCard from "../components/reportCard/reportCard";
+import { TailSpin } from "react-loader-spinner";
 import { apiInstance } from "../utils/utils";
 import image1 from "../assests/kat-j-NPmR0RblyhQ-unsplash.jpg";
 
 const Timeline = () => {
   const [posts, setPosts] = useState([]);
-  // const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     getContent();
   }, []);
 
   const getContent = () => {
+    setLoading(true);
     apiInstance
       .get("/posts/verified")
       .then((resp) => {
+        setLoading(false);
         const {
           data: { data },
         } = resp;
@@ -27,6 +30,7 @@ const Timeline = () => {
         setPosts(data);
       })
       .catch((err) => {
+        setLoading(false);
         console.log(err.response.data.error);
       });
   };
@@ -44,34 +48,38 @@ const Timeline = () => {
                 <span>Submit threat</span>
               </div>
             </Link>
-
-            {/* <div className="timeline__cta">Submit a threat</div> */}
           </div>
         </div>
 
         <div className="timeline__body">
           <div className="timeline__bodyTitle">Threats</div>
-
-          <div className="timeline__reports">
-            {posts && posts.length === 0 ? (
-              <div className="timeline__none">There are no posts</div>
-            ) : (
-              posts?.map((data, index) => {
-                return (
-                  <div key={index}>
-                    <ReportCard
-                      data={data}
-                      success={(resp) => {
-                        alert(resp);
-                        getContent();
-                      }}
-                    />
-                  </div>
-                );
-              })
-            )}
-            {/* <ReportCard /> */}
-          </div>
+          {loading ? (
+            <>
+              <div className="loading">
+                <TailSpin color="#00b0ff" height={20} width={20} />
+              </div>
+            </>
+          ) : (
+            <div className="timeline__reports">
+              {posts && posts.length === 0 ? (
+                <div className="timeline__none">There are no posts</div>
+              ) : (
+                posts?.map((data, index) => {
+                  return (
+                    <div key={index}>
+                      <ReportCard
+                        data={data}
+                        success={(resp) => {
+                          alert(resp);
+                          getContent();
+                        }}
+                      />
+                    </div>
+                  );
+                })
+              )}
+            </div>
+          )}
         </div>
       </DashboardLayout>
     </>

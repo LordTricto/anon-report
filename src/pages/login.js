@@ -6,6 +6,7 @@ import { Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
 
 import Input from "../components/Input/input";
+import { TailSpin } from "react-loader-spinner";
 import YupPassword from "yup-password";
 import { apiInstance } from "../utils/utils";
 import { setAdmin } from "../redux/actions/actions";
@@ -35,12 +36,15 @@ const Login = () => {
   const [login, setLogin] = useState(false);
   const [token, setToken] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     if (login) {
       dispatch(setAdmin(token));
       navigation("/admintimeline");
     }
   }, [login]); // eslint-disable-line react-hooks/exhaustive-deps
+
   return (
     <div className="container">
       <div className="main">
@@ -54,16 +58,19 @@ const Login = () => {
                 }}
                 validationSchema={FORM_VALIDATION}
                 onSubmit={(info) => {
+                  setLoading(true);
                   apiInstance
                     .post("/users/signin", {
                       email: info.email,
                       password: info.password,
                     })
                     .then((resp) => {
+                      setLoading(false);
                       setToken(resp.data.data);
                       setLogin(true);
                     })
                     .catch((err) => {
+                      setLoading(false);
                       setErrorMessage(err.response.data.error);
                     });
                 }}
@@ -84,9 +91,23 @@ const Login = () => {
                         ? errorMessage
                         : null}
                     </div>
-                    <button className="login__button" type="sumbit">
-                      Login
-                    </button>
+                    <div>
+                      <button className="login__button" type="sumbit">
+                        {loading ? (
+                          <>
+                            <div className="loading">
+                              <TailSpin
+                                color="#00b0ff"
+                                height={20}
+                                width={20}
+                              />
+                            </div>
+                          </>
+                        ) : (
+                          <>Login</>
+                        )}
+                      </button>
+                    </div>
                   </Form>
                 )}
               </Formik>

@@ -2,16 +2,18 @@ import "./style.css";
 
 import React, { useState } from "react";
 
+import { TailSpin } from "react-loader-spinner";
 import { apiInstance } from "../../utils/utils";
 
 const ChatbotModal = ({ closeFunc, feedbackId }) => {
   const [stage, setStage] = useState(1);
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const getQuestion = (number, stage) => {
-    console.log(number);
-    // console.log(stage);
+    setLoading(true);
+
     apiInstance
       .get(`/feedbacks/questions/${feedbackId}`, {
         params: {
@@ -19,6 +21,7 @@ const ChatbotModal = ({ closeFunc, feedbackId }) => {
         },
       })
       .then((resp) => {
+        setLoading(false);
         const {
           data: { data },
         } = resp;
@@ -27,12 +30,13 @@ const ChatbotModal = ({ closeFunc, feedbackId }) => {
         setAnswer(() => "");
       })
       .catch((err) => {
+        setLoading(false);
         console.log(err.response?.data?.error);
       });
   };
 
   const saveAnswer = (answer, number, question, stage) => {
-    // console.log(question);
+    setLoading(true);
     apiInstance
       .patch(
         `/feedbacks/answers/${feedbackId}`,
@@ -46,6 +50,7 @@ const ChatbotModal = ({ closeFunc, feedbackId }) => {
         }
       )
       .then((resp) => {
+        setLoading(false);
         const {
           data: { data },
         } = resp;
@@ -54,14 +59,21 @@ const ChatbotModal = ({ closeFunc, feedbackId }) => {
         question === null ? setStage(6) : getQuestion(question, stage);
       })
       .catch((err) => {
+        setLoading(false);
         console.log(err.response.data.error);
       });
   };
-  // console.log(answer);
+
   return (
     <div className="modal__container">
       <div className="modal__content">
-        {stage === 1 ? (
+        {loading ? (
+          <>
+            <div className="loading">
+              <TailSpin color="#00b0ff" height={20} width={20} />
+            </div>
+          </>
+        ) : stage === 1 ? (
           <>
             <div className="modal__top">
               <h2>Thank you for reporting a case</h2>
@@ -81,17 +93,16 @@ const ChatbotModal = ({ closeFunc, feedbackId }) => {
             <div className="modal__top">
               <h2>Question 1</h2>
               <span> {question} </span>
-              <div>
-                <textarea
-                  className="modal__textarea Top"
-                  name="Answer"
-                  value={answer}
-                  onChange={(event) => {
-                    const { value } = event.target;
-                    setAnswer(value);
-                  }}
-                ></textarea>
-              </div>
+
+              <textarea
+                className="modal__textarea Top"
+                name="Answer"
+                value={answer}
+                onChange={(event) => {
+                  const { value } = event.target;
+                  setAnswer(value);
+                }}
+              ></textarea>
             </div>
             <div
               className="modal__button"

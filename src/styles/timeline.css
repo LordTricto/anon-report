@@ -6,15 +6,14 @@
   width: 100%;
   height: 100%;
   padding: 2.5rem 4rem;
-  gap: 2rem;
   max-width: 100rem;
-  /* background-color: #fcfbfe; */
 }
 .timeline__hero {
   display: flex;
   position: relative;
   height: 100vh;
   width: 100%;
+  text-align: center;
 }
 .timeline__img {
   position: absolute;
@@ -30,9 +29,12 @@
   align-items: center;
   flex-direction: column;
   color: white;
-  gap: 1.5rem;
+}
+.timeline__heroDiv div:not(:first-child) {
+  margin-top: 1.5rem;
 }
 .timeline__heroDiv a {
+  margin-top: 1.5rem;
   text-decoration: none;
 }
 .timeline__heroHead {
@@ -70,6 +72,7 @@
   place-content: center;
   width: 100%;
   gap: 2rem;
+  margin-top: 2rem;
 }
 .timeline__none {
   display: flex;
@@ -82,4 +85,18 @@
 .timeline__bodyTitle {
   padding: 3rem 0rem;
   font-size: 2rem;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+@media only screen and (max-width: 600px) {
+  .timeline__body {
+    padding: 2.5rem 2rem;
+  }
 }

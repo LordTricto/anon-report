@@ -53,44 +53,9 @@ const ChartCanva = ({ dataArray, keyArray }) => {
           },
         ],
       }}
-      // height="100%"
-      // width={600}
       options={{
         responsive: true,
         maintainAspectRatio: false,
-        // scales: {
-        //   x: {
-        //     type: "time",
-        //     time: {
-        //       unit: "month",
-        //     },
-        //   },
-        //   y: {
-        //     beginAtZero: true,
-        //     grid: {
-        //       display: false,
-        //     },
-        //     ticks: {
-        //       // stepSize: 50000004517,
-        //       // beginAtZero: true,
-        //       // Include a dollar sign in the ticks
-        //       callback: function (value, index, values) {
-        //         return "$" + value;
-        //       },
-        //       gridLines: {
-        //         display: false,
-        //       },
-        //     },
-        //   },
-        // },
-        // plugins: {
-        //   legend: {
-        //     display: false,
-        //     // labels: {
-        //     //   fontSize: 25,
-        //     // },
-        //   },
-        // },
       }}
     />
   );

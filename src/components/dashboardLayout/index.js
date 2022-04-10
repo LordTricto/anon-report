@@ -3,6 +3,7 @@ import "./style.css";
 import { Link, useLocation } from "react-router-dom";
 import React, { useState } from "react";
 
+import { apiInstance } from "../../utils/utils";
 import { setUser } from "../../redux/actions/actions";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -12,7 +13,16 @@ const Index = (props) => {
 	const location = useLocation();
 	const admin = useSelector((state) => state.admin);
 	const [openNav, setOpenNav] = useState(false);
-	console.log(openNav);
+	const recordClick = () => {
+		apiInstance
+			.post("/clicks", { linkName: "submit threat" })
+			.then((resp) => {
+				console.log(resp.data);
+			})
+			.catch((err) => {
+				console.log(err.response.data.error);
+			});
+	};
 	return (
 		<div className="dashboard__container">
 			<div className="dashboard__header">
@@ -59,7 +69,7 @@ const Index = (props) => {
 					)}
 
 					<Link to="/report">
-						<div className="dashboard__cta">
+						<div className="dashboard__cta" onClick={() => recordClick()}>
 							<span className="dashboard__link cta">Submit threat</span>
 						</div>
 					</Link>

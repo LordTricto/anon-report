@@ -139,7 +139,8 @@ const ReportCard = ({ data, key, admin, success, ai = null, min }) => {
 				console.log(err.response.data.error);
 			});
 	};
-
+	console.log(ai);
+	console.log(ai.valid);
 	return (
 		<>
 			<div className="report__post" key={key}>
@@ -212,7 +213,7 @@ const ReportCard = ({ data, key, admin, success, ai = null, min }) => {
 				{admin && (
 					<>
 						<div className="report__control">
-							{ai !== null && (
+							{ai && ai.valid && (
 								<div className="report__ai">
 									Note AI has determined that this post is
 									<span className="ai">

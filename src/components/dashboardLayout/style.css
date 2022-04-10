@@ -214,6 +214,7 @@
   }
   .dashboard__hamburger {
     display: block;
+    cursor: pointer;
   }
   .dashboard__link.cta {
     display: block !important;
@@ -227,7 +228,7 @@
   .dashboard__aside {
     display: none;
   }
-  .dashboard__aside--mobile.show {
+  .--dashboard__show {
     transform: translateX(0);
   }
   .dashboard__hamburger {

@@ -163,3 +163,25 @@ input[type="file"] {
   font-size: 0;
   position: absolute;
 }
+
+
+
+@media only screen and (max-width: 400px) {
+.post__bottom{
+
+  flex-direction:column;
+}
+.post__button{
+margin: 0;
+width: 100%;
+}
+.post__button button{
+  width: 100%;
+  }
+
+.post__img{
+padding-top: 1rem;
+padding-bottom: 2rem;
+}
+
+}

@@ -139,8 +139,6 @@ const ReportCard = ({ data, key, admin, success, ai = null, min }) => {
 				console.log(err.response.data.error);
 			});
 	};
-	console.log(ai);
-	console.log(ai.valid);
 	return (
 		<>
 			<div className="report__post" key={key}>

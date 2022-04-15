@@ -66,9 +66,10 @@ const PostCard = ({ nextFunc }) => {
 
 	const onSubmit = async (e) => {
 		e.preventDefault();
-		const data = new FormData();
+		let data = new FormData();
 		data.append("post", title);
-		data.append("media", file);
+		// data.append("media", file);
+		file.map((el) => data.append("media", el));
 		data.append("description", description);
 		data.append("location", location);
 		data.append("happening", happening);
@@ -89,7 +90,7 @@ const PostCard = ({ nextFunc }) => {
 
 	const recordImageClick = () => {
 		apiInstance
-			.post("/addNewClick", { linkName: "image" })
+			.post("/clicks", { linkName: "image" })
 			.then((resp) => {
 				console.log(resp.data);
 			})
@@ -101,7 +102,7 @@ const PostCard = ({ nextFunc }) => {
 	const handleImageChange = (e) => {
 		console.log(e.target.files);
 		if (e.target.files) {
-			setFile(e.target.files);
+			setFile([...e.target.files]);
 			const filesArray = Array.from(e.target.files)
 				.filter((file) => file.type.includes("image"))
 				.map((file) => URL.createObjectURL(file));
@@ -122,7 +123,7 @@ const PostCard = ({ nextFunc }) => {
 	};
 
 	const renderPhotos = (source) => {
-		console.log("source: ", source);
+		// console.log("source: ", source);
 		return source.map((photo) => {
 			return <img src={photo} alt="" key={photo} />;
 		});
@@ -142,7 +143,7 @@ const PostCard = ({ nextFunc }) => {
 			return <audio src={audio}></audio>;
 		});
 	};
-
+	console.log(file);
 	return (
 		<>
 			<div className="post__card">
